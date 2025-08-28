@@ -7,7 +7,7 @@ module signext
 );
 
   always_comb begin
-    casez (a[31:21])
+    casez (a[31:21])// 11 bits de OPCODE
 
       //LDUR
       11'b111_1100_0010:
@@ -18,7 +18,7 @@ module signext
         y = {{55{a[20]}}, {a[20:12]}}; 
       //CBZ
       11'b101_1010_0???: 
-        y = {{45{a[23]}}, {a[23:5]}, 2'b0};
+        y = {{45{a[23]}}, {a[23:5]}};
 
       default: y = 64'b0;
     endcase  
