@@ -1,12 +1,26 @@
-module alu (
-            input logic [63:0] a, b,
-            input logic [3:0] ALUControl,
-            output logic [63:0] result,
-            output logic zero
-            );
-			
+`timescale 1ns/1ps
+
+module alu 
+  (
+    input logic [63:0] a,
+    input logic [63:0] b,
+    input logic [3:0] ALUControl,
+    output logic [63:0] result,
+    output logic zero
+);
 	logic [63:0] b_cmpl2;
-	complemento_2 #(64) cmpl2_inst (.a(b), .q(b_cmpl2));
+
+  /*
+  Instancia del Flip Flop de 32 bits
+  -----------------------
+  */
+	twos_complement #(64) cmpl2_inst (
+    .a(b),
+    .q(b_cmpl2)
+  );
+  /*
+  -----------------------
+  */
 
 	always_comb begin 
 		casez(ALUControl) 
