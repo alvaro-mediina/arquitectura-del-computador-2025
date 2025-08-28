@@ -1,27 +1,7 @@
 `timescale 1ns/1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 08/26/2025 05:20:17 PM
-// Design Name: 
-// Module Name: flopr_tb
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module flopr_tb();
-  parameter N = 64;
+  parameter N = 32;
   logic clk, reset;
   logic [N-1:0] d, q, qexp;
 
@@ -55,7 +35,7 @@ module flopr_tb();
   end
 
   /*
-  Instancia del Flip Flop de 64 bits
+  Instancia del Flip Flop de 32 bits
   -----------------------
   */
   flopr #(N) dut(
@@ -80,7 +60,7 @@ module flopr_tb();
     if (!reset) begin
       if(q != qexp) begin
         $display("------------------------\n");
-        $display("\nError: input = %b", {dvectors[i]});
+        $display("\nError: input = %d", {dvectors[i]});
         $display("Output = %b (%b expected)",q, qexp);
         errors++;
       end
