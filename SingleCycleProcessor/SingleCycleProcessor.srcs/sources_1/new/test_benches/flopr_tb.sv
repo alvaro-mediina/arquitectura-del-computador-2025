@@ -1,12 +1,17 @@
+// Flopr Testbench module
+
 `timescale 1ns/1ps
 
 module flopr_tb();
+
   parameter N = 32;
   logic clk, reset;
-  logic [N-1:0] d, q, qexp;
-
+  logic [N-1:0] d;
+  logic [N-1:0] q;
+  logic [N-1:0] qexp;
   int i = 0;
   int errors = 0;
+  parameter int tests = 10;
   
   //Inicialización con 10 números distintos
     logic [N-1:0] dvectors [0:9] = {
@@ -38,7 +43,7 @@ module flopr_tb();
   Instancia del Flip Flop de 32 bits
   -----------------------
   */
-  flopr #(N) dut(
+  flopr #(.N(N)) dut(
     .clk(clk),
     .reset(reset),
     .d(d),
@@ -62,10 +67,11 @@ module flopr_tb();
         $display("------------------------\n");
         $display("\nError: input = %d", {dvectors[i]});
         $display("Output = %b (%b expected)",q, qexp);
+        $display("------------------------\n");
         errors++;
       end
       i++;
-      if(i == 10) begin
+      if(i == tests) begin
         $display("%d test completed with %d errors",i, errors);
         $stop;
       end

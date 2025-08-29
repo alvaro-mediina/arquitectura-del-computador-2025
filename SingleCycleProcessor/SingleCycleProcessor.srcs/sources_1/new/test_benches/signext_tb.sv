@@ -1,8 +1,13 @@
 // Signext Testbench module
+
+`timescale 1ns/1ps
+
 module signext_tb();
 
     logic [31:0] a;
     logic [63:0] y;
+    int errors = 0;
+    parameter int tests = 13;
 
     logic [31:0] instructions[0:12] = '{
         {32'b11111000010_01110001100_01001_10110},    // LDUR positivo
@@ -35,7 +40,7 @@ module signext_tb();
         64'b0  // BL
       };
 
-    int errors = 0;
+
 
   /*
   Instancia del Sign Extend
@@ -50,18 +55,20 @@ module signext_tb();
   */
 
     initial begin
-        for (int i = 0; i < 13; ++i) begin
+        for (int i = 0; i < tests; ++i) begin
             #1ns; a = instructions[i]; #1ns;
             if (y != yexpected[i] ) begin
+                $display("------------------------\n");
                 $display("Error");
                 $display("output = %h, (expected %h)", y, yexpected[i]);
-                errors++; #1ns;
+                $display("------------------------\n");
+                errors++;
             end
             else begin
                 $display("Test %d passed succesfully", i+1);
             end
         end
-        $display("%d tests completed with %d errors", 13, errors);
+        $display("%d tests completed with %d errors", tests, errors);
         $stop;
 
     end
